@@ -7,11 +7,114 @@
 
 using namespace std;
 
-int cache_num;
+int cache_size;
 int alg;
 int page_num;
 
 int hit_num = 0;
+
+
+struct CircularNode {
+    int valid;
+    int data;
+    CircularNode *next;
+};
+
+struct CircularNode* hand = NULL;
+
+CircularNode* init_circle_list (int length) {
+
+//    struct CircularNode* head;
+    struct CircularNode* curr;
+    struct CircularNode* next;
+
+    struct CircularNode* head = new CircularNode();
+    head->valid= 0;
+    head->data = -1;
+    head->next = NULL;
+
+    hand = head;
+    curr = head;
+    CircularNode* tmp;
+    for (int i = 1; i < length; i ++) {
+         tmp = new CircularNode();
+        tmp->valid = 0;
+        tmp->data = -1;
+        tmp->next = NULL;
+
+        curr->next = tmp;
+        curr = curr->next;
+    }
+
+    curr->next = head;
+
+}
+
+void display() {
+    struct CircularNode* ptr;
+    ptr = hand;
+    cout << "circle list: ";
+    do {
+        cout<<ptr->data <<" (" << ptr->valid << ") ";
+        ptr = ptr->next;
+    } while(ptr != hand);
+    cout << endl;
+}
+
+
+
+int clock() {
+
+    init_circle_list(cache_size);
+    map<int, CircularNode*> in_cache_page;
+    int curr;
+    for(int i = 0; i < page_num; i ++) {
+        cin >> curr;
+
+        //check hit
+        if (in_cache_page.find(curr) != in_cache_page.end()) {
+            hit_num ++;
+            in_cache_page[curr]->valid = 1;
+        }
+        // miss : insert & replace
+        else {
+
+            // find fist valid = 0
+            struct CircularNode* ptr;
+            int replace_page;
+            ptr = hand;
+            do {
+                if (ptr->valid == 0) {
+                    ptr->valid = 1;
+                    replace_page = ptr->data;
+                    ptr->data = curr;
+                    hand = ptr->next;
+                    break;
+                } else {
+                    ptr->valid = 0;
+                }
+                ptr = ptr->next;
+            } while(1);
+            if (replace_page != -1) {
+                in_cache_page.erase(replace_page);
+//                cout << i+1 << " : replace value is " << replace_page << endl;
+            }
+            in_cache_page[curr] = ptr;
+
+
+        }
+//        cout << i+1 << " : ";
+//        display();
+    }
+
+    return 0;
+}
+
+
+
+
+
+
 
 int FIFO() {
     map<int, int> used_pages;
@@ -28,7 +131,7 @@ int FIFO() {
         }
 
         // insert & replace
-        if(q.size() == cache_num) {
+        if(q.size() == cache_size) {
             // cache is full
             int delete_page = q.front();
             q.pop();
@@ -55,11 +158,10 @@ int LRU() {
         if (in_cache_page_to_list_pos.find(curr) != in_cache_page_to_list_pos.end()) {
             hit_num ++;
             use.erase(in_cache_page_to_list_pos[curr]);
-            continue;
-        }
 
+        }
         // insert & replace
-        if(use.size() == cache_num) {
+        else if(use.size() == cache_size) {
             // cache is full
             int delete_page = use.back();
             use.pop_back();
@@ -97,7 +199,7 @@ int min() {
         }
 
         // insert & replace
-        if(in_cache_num == cache_num) {
+        if(in_cache_num == cache_size) {
             // cache is full, replace
 
             int replace_page = -1;
@@ -142,11 +244,13 @@ int min() {
 int main() {
 
     // read the input
-    cin >> cache_num >> alg >> page_num;
+    cin >> cache_size >> alg >> page_num;
 
 //    FIFO();
 //    min();
-    LRU();
+//    LRU();
+    clock();
     printf("Hit ratio = %2.2f\%", 100*hit_num/(double)page_num);
+
     return 0;
 }
