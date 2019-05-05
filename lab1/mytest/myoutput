@@ -1,0 +1,10 @@
+[mytest]
+/home/luning/workspace/OS/lab1/mytest/a *
+/home/luning/workspace/OS/lab1/mytest/myoutput
+/home/luning/workspace/OS/lab1/mytest/output.txt
+
+[a *]
+/home/luning/workspace/OS/lab1/mytest/a */1.txt
+
+[Directories Count]:1
+[Files Count]:3

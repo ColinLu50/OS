@@ -1,0 +1,46 @@
+[test_case]
+/home/luning/workspace/OS/lab1/test_case/!@#$ 321$%
+/home/luning/workspace/OS/lab1/test_case/answer.file
+/home/luning/workspace/OS/lab1/test_case/baseline.sh
+/home/luning/workspace/OS/lab1/test_case/output.file
+/home/luning/workspace/OS/lab1/test_case/result.file
+/home/luning/workspace/OS/lab1/test_case/test_directory
+
+[test_directory]
+/home/luning/workspace/OS/lab1/test_case/test_directory/? @ # $&()\|; ‘’“”<>
+/home/luning/workspace/OS/lab1/test_case/test_directory/a b
+/home/luning/workspace/OS/lab1/test_case/test_directory/d_1
+/home/luning/workspace/OS/lab1/test_case/test_directory/d_2
+/home/luning/workspace/OS/lab1/test_case/test_directory/\n\t\0
+/home/luning/workspace/OS/lab1/test_case/test_directory/\n\t%^&*\0\9$1
+
+[? @ # $&()\|; ‘’“”<>]
+
+[a b]
+/home/luning/workspace/OS/lab1/test_case/test_directory/a b/z z $ z.txt`
+
+[d_1]
+/home/luning/workspace/OS/lab1/test_case/test_directory/d_1/aa
+/home/luning/workspace/OS/lab1/test_case/test_directory/d_1/d_1_1
+/home/luning/workspace/OS/lab1/test_case/test_directory/d_1/d_1_2
+/home/luning/workspace/OS/lab1/test_case/test_directory/d_1/file1
+/home/luning/workspace/OS/lab1/test_case/test_directory/d_1/file2
+
+[d_2]
+/home/luning/workspace/OS/lab1/test_case/test_directory/d_2/d_2_2
+/home/luning/workspace/OS/lab1/test_case/test_directory/d_2/f_2_2
+
+[\n\t%^&*\0\9$1]
+
+[z z $ z.txt`]
+
+[d_1_1]
+/home/luning/workspace/OS/lab1/test_case/test_directory/d_1/d_1_1/f_1_1_1
+
+[d_1_2]
+
+[d_2_2]
+/home/luning/workspace/OS/lab1/test_case/test_directory/d_2/d_2_2/f_2_2
+
+[Directories Count]:10
+[Files Count]:12
