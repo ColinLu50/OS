@@ -124,7 +124,7 @@ int FIFO() {
         cin >> curr;
 
         //check hit
-        if(used_pages[curr] == 1) {
+        if(used_pages.find(curr) != used_pages.end()) {
             hit_num ++;
 //            cout << i+1 << " : hit value is " << curr << endl;
             continue;
@@ -175,6 +175,94 @@ int LRU() {
 
     return 0;
 }
+
+int second_chance() {
+    int FIFO_zise = cache_size / 2;
+    int LRU_zise = cache_size - FIFO_zise;
+
+    list<int> LRU_list;
+    map<int, list<int>::iterator> in_LRU_to_list_pos;
+    map<int, int> in_FIFO;
+    queue<int> q;
+
+    int curr;
+    for(int i = 0; i < page_num; i ++) {
+        cin >> curr;
+
+        //check hit
+        // hit in FIFO
+        if (in_FIFO.find(curr) != in_FIFO.end()) {
+            hit_num ++;
+            continue;
+        }
+        // hit in LRU
+        else if (in_LRU_to_list_pos.find(curr) != in_LRU_to_list_pos.end()) {
+            hit_num ++;
+
+            // remove from LRU list
+            LRU_list.erase(in_LRU_to_list_pos[curr]);
+            in_LRU_to_list_pos.erase(curr);
+
+//            // put it into FIFO list
+//            in_FIFO[curr] = 1;
+//            q.push(curr);
+//
+//            // remove the front from FIFO queue
+//            int FIFO_delete_page = q.front();
+//            q.pop();
+//            in_FIFO.erase(FIFO_delete_page);
+//
+//            // put the FIFO delete page into LRU list
+//
+//
+//
+//
+//            LRU_list.push_front(curr);
+//            in_LRU_to_list_pos[curr] = LRU_list.begin();
+//            continue;
+        }
+
+        // miss: insert & replace
+        // first add to FIFO queue
+        if(q.size() < FIFO_zise) {
+            // cache is not full
+            in_FIFO[curr] = 1;
+            q.push(curr);
+        } else {
+            // queue is full
+            // first remove from FIFO list
+            int FIFO_delete_page = q.front();
+            q.pop();
+            in_FIFO.erase(FIFO_delete_page);
+
+            // push the new page into FIFO list
+            in_FIFO[curr] = 1;
+            q.push(curr);
+
+            // push the FIFO delete page into LRU list
+            // check if LRU list is full
+            if (LRU_list.size() == LRU_zise) {
+                // if full, remove the LRU page
+                int LRU_delete_page = LRU_list.back();
+                LRU_list.pop_back();
+                in_LRU_to_list_pos.erase(LRU_delete_page);
+            }
+            // add the FIFO delete page
+            LRU_list.push_front(FIFO_delete_page);
+            in_LRU_to_list_pos[FIFO_delete_page] = LRU_list.begin();
+
+
+//            cout << i+1 << " : pop value is " << FIFO_delete_page << endl;
+        }
+//        printf("");
+    }
+
+    return 0;
+
+
+}
+
+
 
 int min() {
     map<int, queue<int>> use;
@@ -249,7 +337,8 @@ int main() {
 //    FIFO();
 //    min();
 //    LRU();
-    clock();
+//    clock();
+    second_chance();
     printf("Hit ratio = %2.2f\%", 100*hit_num/(double)page_num);
 
     return 0;
