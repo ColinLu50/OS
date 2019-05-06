@@ -236,7 +236,7 @@ int second_chance() {
 
 
         }
-
+x
     }
 
     return 0;
