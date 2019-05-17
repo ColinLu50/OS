@@ -1,0 +1,7 @@
+[mytest]
+/home/luning/workspace/OS/lab1/mytest/a *
+
+[a *]
+
+[Directories Count]:1
+[Files Count]:0

@@ -97,14 +97,11 @@ int clock_alg() {
             } while(1);
             if (replace_page != -1) {
                 in_cache_page.erase(replace_page);
-//                cout << i+1 << " : replace value is " << replace_page << endl;
             }
             in_cache_page[curr] = ptr;
 
 
         }
-//        cout << i+1 << " : ";
-//        display();
     }
 
     return 0;
@@ -126,7 +123,6 @@ int FIFO() {
         //check hit
         if(used_pages.find(curr) != used_pages.end()) {
             hit_num ++;
-//            cout << i+1 << " : hit value is " << curr << endl;
             continue;
         }
 
@@ -136,7 +132,6 @@ int FIFO() {
             int delete_page = q.front();
             q.pop();
             used_pages.erase(delete_page);
-//            cout << i+1 << " : pop value is " << delete_page << endl;
         }
 
         used_pages[curr] = 1;
@@ -166,7 +161,6 @@ int LRU() {
             int delete_page = use.back();
             use.pop_back();
             in_cache_page_to_list_pos.erase(delete_page);
-//            cout << i+1 << " : pop value is " << delete_page << endl;
         }
 
         use.push_front(curr);
@@ -203,23 +197,7 @@ int second_chance() {
             LRU_list.erase(in_LRU_to_list_pos[curr]);
             in_LRU_to_list_pos.erase(curr);
 
-//            // put it into FIFO list
-//            in_FIFO[curr] = 1;
-//            q.push(curr);
-//
-//            // remove the front from FIFO queue
-//            int FIFO_delete_page = q.front();
-//            q.pop();
-//            in_FIFO.erase(FIFO_delete_page);
-//
-//            // put the FIFO delete page into LRU list
-//
-//
-//
-//
-//            LRU_list.push_front(curr);
-//            in_LRU_to_list_pos[curr] = LRU_list.begin();
-//            continue;
+
         }
 
         // miss: insert & replace
@@ -250,11 +228,7 @@ int second_chance() {
             // add the FIFO delete page
             LRU_list.push_front(FIFO_delete_page);
             in_LRU_to_list_pos[FIFO_delete_page] = LRU_list.begin();
-
-
-//            cout << i+1 << " : pop value is " << FIFO_delete_page << endl;
         }
-//        printf("");
     }
 
     return 0;
@@ -316,7 +290,6 @@ int min() {
 
             in_cache.erase(replace_page);
             in_cache_num --;
-//            cout << i+1 << " : replace value is " << replace_page << endl;
         }
 
         // insert
