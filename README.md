@@ -2,7 +2,9 @@
 
 ## Course Info
 School: SUSTech
+
 Professor: TANG Bo 
+
 Mail: tangb3@sustech.edu.cn
 
 ## Introduction
