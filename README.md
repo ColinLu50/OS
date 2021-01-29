@@ -1,4 +1,4 @@
-# Operating System SUTECH
+# Operating System SUSTech
 
 ## Course Info
 School: SUSTech
